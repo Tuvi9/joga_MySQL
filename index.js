@@ -53,9 +53,17 @@ app.get('/article/:slug', (req, res) => {
     con.query(query, (err, result) => {
         if (err) throw err;
         article = result;
-        console.log(article);
         res.render('article', {article:article});
     });
+});
+
+// Join author names to article table
+app.get('/article/:author_name', (req, res) => {
+    let query = `SELECT article.author_id AS article_id, author.id AS author_id, author.name AS author_name FROM article INNER JOIN author ON article.author_id = author.id WHERE author.id="${req.params.author_id}"`;
+    con.query(query,(err, result) => {
+        if (err) throw err;
+        res.render('article', {article:result});
+    });  
 });
 // app start point
 app.listen(3000, () => {
