@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
     con.query(query, (err, result) => {
         if (err) throw err;
         articles = result;
-        console.log(articles);
         res.render('index', {articles: articles})
     })
 });
@@ -53,6 +52,18 @@ app.get('/article/:slug', (req, res) => {
         if (err) throw err;
         res.render('article', {article: result[0]});
     });
+});
+
+// show articles by author
+app.get('/author/:id', (req, res) => {
+    let query = `SELECT article.*, author.name AS author FROM article INNER JOIN author ON article.author_id = author.id WHERE author.id="${req.params.id}"`;
+    let articles = []
+    // Passes JS code from query into the query function
+    con.query(query, [req.params.id], (err, result) => {
+        if (err) throw err;
+        articles = result;
+        res.render('author', {articles: articles, author: articles[0].author});
+    })
 });
 
 // app start point

@@ -1,7 +1,10 @@
 {{#article}}
     <h1>{{name}}</h1>
     <p>Published {{published}}</p>
-    <p>Author: {{author_name}}</p>
+    {{! Links to the author's page through the author_id}}
+    {{! We can use the author_name because we passed it in the context}}
+    {{! when we called the template in the router.}}
+    <p>Author <a href="/author/{{author_id}}">{{author_name}}</a></p>
     <img src="/images/{{image}}" alt="">
     {{{body}}}
 {{/article}}
