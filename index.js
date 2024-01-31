@@ -1,33 +1,46 @@
-// add application packages
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const path = require('path');
-
-// add template engine
-const hbs = require('express-handlebars');
-// May or may not be properly written.
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-app.engine('hbs', hbs.engine({
-    extname: 'hbs',
-    defaultLayout: 'main',
-    layoutsDir: __dirname + '/views/layouts',
-}));
-app.use(express.static('public'));
-
-
-
-const articleRoutes = require('./routes/article')
+// When user goes to /, route to main page (routes/articles.js)
+const articleRoutes = require('./routes/articles');
 app.use('/', articleRoutes);
-app.use('/article', articleRoutes)
-app.use('/author', articleRoutes)
 
-// app start point
 app.listen(3000, () => {
-    console.log('Server is running at port 3000');
+    console.log('https://localhost:3000')
 });
 
+// // add application packages
+// const express = require('express');
+// const app = express();
+
+// const path = require('path');
+
+// // add template engine
+// const hbs = require('express-handlebars');
+// // May or may not be properly written.
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'hbs');
+// app.engine('hbs', hbs.engine({
+//     extname: 'hbs',
+//     defaultLayout: 'main',
+//     layoutsDir: __dirname + '/views/layouts',
+// }));
+// app.use(express.static('public'));
+
+
+
+// const articleRoutes = require('./routes/article')
+// app.use('/', articleRoutes);
+// app.use('/article', articleRoutes)
+// app.use('/author', articleRoutes)
+
+// // app start point
+// app.listen(3000, () => {
+//     console.log('Server is running at http://localhost:3000');
 /*
 // show all articles - index page
 app.get('/', (req, res) => {
