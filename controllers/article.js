@@ -11,7 +11,14 @@ class articleController {
         const articles = await articleModel.findAll()
         res.status(201).json({articles:articles})
     };
+
+    // Wait for getArticleBySlug in (models/article.js) to finish, then send the response back to (routes/article.js)
+    async getArticleBySlug(req, res){
+        const article = await articleModel.findOne(req.params.slug)
+        res.status(201).json({article:article})
+    }
 };
+
 
 module.exports = articleController
 
