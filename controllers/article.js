@@ -18,6 +18,7 @@ class articleController {
         res.status(201).json({article:article})
     };
 
+    // Wait for createNewArticle in (models/article.js) to finish, then send the response back to (routes/article.js)
     async createNewArticle(req, res){
         const newArticle = {
             name: req.body.name,
@@ -31,6 +32,25 @@ class articleController {
         res.status(201).json({
             message: `created article with id ${articleId}`,
             article: {id: articleId, ...newArticle}
+        });
+    };
+
+    // Wait for editArticle in (models/article.js) to finish, then send the response back to (routes/article.js)
+    //! Updates the article with the id from the request
+    async editArticle(req, res){
+        const articleId = req.params.id
+        const updatedArticle = {
+            name: req.body.name,
+            slug: req.body.slug,
+            image: req.body.image,
+            body: req.body.body,
+            published: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            author_id: req.body.author_id
+        };
+        const affectedRows = await articleModel.update(articleId, updatedArticle)
+        res.status(201).json({
+            message: `updated article with id ${articleId}`,
+            article: {id: articleId, ...updatedArticle}
         });
     };
 };
