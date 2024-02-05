@@ -4,10 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 // When user goes to /, route to main page (routes/articles.js)
 const articleRoutes = require('./routes/articles');
 app.use('/', articleRoutes);
+app.use('/article', articleRoutes);
+
+const authorRoutes = require('./routes/author');
+app.use('/author', authorRoutes);
 
 app.listen(3000, () => {
     console.log('https://localhost:3000')
