@@ -4,16 +4,18 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// When user goes to /, route to main page (routes/articles.js)
+
+//! When user goes to /, route to main page (routes/articles.js)
 const articleRoutes = require('./routes/articles');
 app.use('/', articleRoutes);
 app.use('/article', articleRoutes);
-
+//! When user goes to /author, route to author page (routes/author.js)
 const authorRoutes = require('./routes/author');
 app.use('/author', authorRoutes);
 
+//! Start the server
 app.listen(3000, () => {
-    console.log('https://localhost:3000')
+    console.log('localhost:3000')
 });
 
 // // add application packages

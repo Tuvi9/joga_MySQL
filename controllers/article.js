@@ -7,18 +7,21 @@ class articleController {
     };
 
     // Wait for getAllArticles in (models/article.js) to finish, then send the response back to (routes/article.js)
+    //! Get all articles
     async getAllArticles(req, res){
         const articles = await articleModel.findAll()
         res.status(201).json({articles:articles})
     };
 
     // Wait for getArticleBySlug in (models/article.js) to finish, then send the response back to (routes/article.js)
+    //! Get article by slug
     async getArticleBySlug(req, res){
         const article = await articleModel.findOne(req.params.slug)
         res.status(201).json({article:article})
     };
 
     // Wait for createNewArticle in (models/article.js) to finish, then send the response back to (routes/article.js)
+    //! Creates a new article
     async createNewArticle(req, res){
         const newArticle = {
             name: req.body.name,
@@ -51,6 +54,16 @@ class articleController {
         res.status(201).json({
             message: `updated article with id ${articleId}`,
             article: {id: articleId, ...updatedArticle}
+        });
+    };
+    // Wait for deleteArticle in (models/article.js) to finish, then send the response back to (routes/article.js)
+    //! Deletes the article with the id from the request
+    deleteArticle(req, res){
+        const articleId = req.params.id
+        const affectedRows = articleModel.delete(articleId)
+        res.status(201).json({
+            message: `deleted article with id ${articleId}`,
+            affectedRows: affectedRows
         });
     };
 };
